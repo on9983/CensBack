@@ -1,0 +1,16 @@
+FROM wyveo/nginx-php-fpm:php81
+
+#RUN "sudo apt install php8.1-mongodb"
+RUN apt-key adv --keyserver keyserver.ubuntu.com --refresh-keys
+RUN apt update
+RUN apt install php8.1-mongodb -y
+
+WORKDIR /code
+
+
+
+COPY nginx.conf /etc/nginx/nginx.conf
+
+ENV DOCKER_ENV=true
+ENV APP_ENV=prod
+# ENV APP_DEBUG=true

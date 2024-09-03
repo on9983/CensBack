@@ -1,0 +1,27 @@
+php -S localhost:8001 -t public
+
+docker build . -t just-test-backend
+docker build -f ./docker/nginx/Dockerfile . -t just-test-backend
+docker run -p 8001:8001 just-test-backend:latest
+
+docker-compose up
+docker-compose up --build
+
+docker exec -it <mycontainer> sh
+
+docker rmi -f $(docker images -aq)
+docker rm $(docker ps -qa)
+
+
+docker build . -t ghcr.io/on9983/just-test2-backend:latest
+
+docker push ghcr.io/on9983/just-test2-backend:latest
+
+
+ serv -> docker pull ghcr.io/on9983/just-test2-backend:latest
+
+
+
+MONGO DB
+sudo apt install php8.1-mongodb
+

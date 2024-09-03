@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports:
+      - "8001:80"
+    networks:
+      - frontend
+      - backend
+  
+  nginxAuthServ:
+    image: ghcr.io/on9983/just-test2-authserv:latest
+    ports:
+      - "8004:80"
+    networks:
+      - backend
+
+  gvrfront:
+    image: ghcr.io/on9983/just-test2-front:latest
+    ports:
+      - "80:3000"
+    networks:
+      - frontend
+
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: UBUNTUfg56&&r
+    volumes:
+      - data:/var/lib/mysql
+    networks:
+      - backend
+
+  php:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    networks:
+      - backend
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: UBUNTUfg56&&r
+    ports:
+      - "8005:80"
+    networks:
+      - backend
+
+volumes:
+  data:
+
+networks:
+  frontend:
+  backend:
